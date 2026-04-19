@@ -1,0 +1,38 @@
+{
+  "hosting": {
+    "target": "laundrykuy",
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "laundrykuy-652c0",
+          "appId": "1:749779589895:android:12b12ec857c5150fa143a2",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "laundrykuy-652c0",
+          "configurations": {
+            "android": "1:749779589895:android:12b12ec857c5150fa143a2",
+            "ios": "1:749779589895:ios:b455f8c22688b6b8a143a2",
+            "web": "1:749779589895:web:afb17bce0df38792a143a2"
+          }
+        }
+      }
+    }
+  }
+}
