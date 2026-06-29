@@ -1,15 +1,5 @@
 {
   "projects": {
-    "default": "laundrykuy-652c0"
-  },
-  "targets": {
-    "laundrykuy-652c0": {
-      "hosting": {
-        "laundrykuy": [
-          "laundrykuy"
-        ]
-      }
-    }
-  },
-  "etags": {}
+    "default": "laundry-bfe40"
+  }
 }

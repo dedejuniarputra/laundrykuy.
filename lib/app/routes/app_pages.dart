@@ -12,6 +12,7 @@ import 'package:laundry_kuy/screens/admin/order_detail_screen.dart';
 import 'package:laundry_kuy/screens/user/tracking_screen.dart';
 import 'package:laundry_kuy/screens/user/tracking_result_screen.dart';
 import 'package:laundry_kuy/app/middlewares/auth_middleware.dart';
+import 'package:laundry_kuy/screens/admin/add_item_screen.dart';
 
 class AppPages {
   static final pages = [
@@ -69,6 +70,13 @@ class AppPages {
       page: () => const TrackingResultScreen(),
       binding: UserBinding(),
       middlewares: [AuthMiddleware()], // Public but monitored
+    ),
+    
+    GetPage(
+      name: AppRoutes.adminAddItem,
+      page: () => const AdminAddItemScreen(),
+      binding: AdminBinding(),
+      middlewares: [AuthMiddleware()], // Admin Only
     ),
   ];
 }

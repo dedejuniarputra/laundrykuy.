@@ -32,35 +32,33 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAXwOpuSyXfoHXNWoj4b7cRcrmMHRkDjfE',
-    appId: '1:749779589895:web:afb17bce0df38792a143a2',
-    messagingSenderId: '749779589895',
-    projectId: 'laundrykuy-652c0',
-    authDomain: 'laundrykuy-652c0.firebaseapp.com',
-    storageBucket: 'laundrykuy-652c0.firebasestorage.app',
-    measurementId: 'G-0G814KHW97',
+    apiKey: 'AIzaSyAXr4iDHgM0XmsFt0zrlSsaMDNuP6q4IwI',
+    appId: '1:912693980258:web:b175ce5b288840462c353b',
+    messagingSenderId: '912693980258',
+    projectId: 'laundry-bfe40',
+    authDomain: 'laundry-bfe40.firebaseapp.com',
+    storageBucket: 'laundry-bfe40.firebasestorage.app',
+    measurementId: 'G-2B62P795Y3',
   );
 
   // TODO: Ganti dengan konfigurasi Firebase Web Anda
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCCjqaXJZ1TeTkwKK13XViWuYkiWyzqbK4',
-    appId: '1:749779589895:android:12b12ec857c5150fa143a2',
-    messagingSenderId: '749779589895',
-    projectId: 'laundrykuy-652c0',
-    storageBucket: 'laundrykuy-652c0.firebasestorage.app',
+    apiKey: 'AIzaSyCZ4FI81Lb-YPUDX0LTCJ2kQpg32gMDJp8',
+    appId: '1:912693980258:android:c94ff0b108418bc02c353b',
+    messagingSenderId: '912693980258',
+    projectId: 'laundry-bfe40',
+    storageBucket: 'laundry-bfe40.firebasestorage.app',
   );
 
   // TODO: Ganti dengan konfigurasi Firebase Android Anda
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAL_htVfKzdVI3_T6N0RRD-SGIkvB_Ufgw',
-    appId: '1:749779589895:ios:b455f8c22688b6b8a143a2',
-    messagingSenderId: '749779589895',
-    projectId: 'laundrykuy-652c0',
-    storageBucket: 'laundrykuy-652c0.firebasestorage.app',
-    iosClientId:
-        '749779589895-p514lp86ao01062512fjh60964gcvds5.apps.googleusercontent.com',
+    apiKey: 'AIzaSyB83I0EhugdXcCGbdHhWOLEWRY-73JJkaA',
+    appId: '1:912693980258:ios:943f9882e0ac083d2c353b',
+    messagingSenderId: '912693980258',
+    projectId: 'laundry-bfe40',
+    storageBucket: 'laundry-bfe40.firebasestorage.app',
     iosBundleId: 'com.laundrykuy.laundryKuy',
   );
 

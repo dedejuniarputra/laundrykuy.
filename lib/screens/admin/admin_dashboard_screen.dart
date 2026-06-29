@@ -19,27 +19,35 @@ class AdminDashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dashboardCtrl = Get.find<DashboardController>();
 
-    return Obx(() => Scaffold(
-          backgroundColor: const Color(0xFFF8FAFC),
-          appBar: _buildAppBar(dashboardCtrl),
-          body: _buildBody(dashboardCtrl),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => Get.toNamed(AppRoutes.adminInputOrder),
-            backgroundColor: AppColors.primary,
-            elevation: 4,
-            child: const Icon(Icons.add_rounded, color: Colors.white, size: 32),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: _buildBottomNavBar(dashboardCtrl),
-        ));
+    return Obx(
+      () => Scaffold(
+        backgroundColor: const Color(0xFFF8FAFC),
+        appBar: _buildAppBar(dashboardCtrl),
+        body: _buildBody(dashboardCtrl),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Get.toNamed(AppRoutes.adminInputOrder),
+          backgroundColor: AppColors.primary,
+          elevation: 4,
+          child: const Icon(Icons.add_rounded, color: Colors.white, size: 32),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: _buildBottomNavBar(dashboardCtrl),
+      ),
+    );
   }
 
   PreferredSizeWidget _buildAppBar(DashboardController controller) {
     String title = 'Beranda';
     switch (controller.currentIndex.value) {
-      case 1: title = 'Daftar Pesanan'; break;
-      case 2: title = 'Laporan Keuangan'; break;
-      case 3: title = 'Pengaturan'; break;
+      case 1:
+        title = 'Daftar Pesanan';
+        break;
+      case 2:
+        title = 'Laporan Keuangan';
+        break;
+      case 3:
+        title = 'Pengaturan';
+        break;
     }
 
     return AppBar(
@@ -55,8 +63,11 @@ class AdminDashboardScreen extends StatelessWidget {
                 child: InkWell(
                   onTap: () => controller.currentIndex.value = 0,
                   borderRadius: BorderRadius.circular(10),
-                  child: const Icon(Icons.arrow_back_ios_new_rounded,
-                      color: Colors.white, size: 18),
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: Colors.white,
+                    size: 18,
+                  ),
                 ),
               ),
             )
@@ -120,11 +131,16 @@ class AdminDashboardScreen extends StatelessWidget {
 
   Widget _buildBody(DashboardController controller) {
     switch (controller.currentIndex.value) {
-      case 0: return _buildHomeView(controller);
-      case 1: return _buildOrdersView(controller);
-      case 2: return _buildLaporanView(controller);
-      case 3: return _buildSettingsView(controller);
-      default: return _buildHomeView(controller);
+      case 0:
+        return _buildHomeView(controller);
+      case 1:
+        return _buildOrdersView(controller);
+      case 2:
+        return _buildLaporanView(controller);
+      case 3:
+        return _buildSettingsView(controller);
+      default:
+        return _buildHomeView(controller);
     }
   }
 
@@ -188,7 +204,14 @@ class AdminDashboardScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () => controller.currentIndex.value = 1,
-                child: Text('Lihat Semua', style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                child: Text(
+                  'Lihat Semua',
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary,
+                  ),
+                ),
               ),
             ],
           ),
@@ -209,13 +232,25 @@ class AdminDashboardScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _statusTab(controller, 'Menunggu', controller.pendingOrders.value),
-              _statusTab(controller, 'Diproses', controller.processingOrders.value),
-              _statusTab(controller, 'Selesai', controller.completedOrders.value),
+              _statusTab(
+                controller,
+                'Menunggu',
+                controller.pendingOrders.value,
+              ),
+              _statusTab(
+                controller,
+                'Diproses',
+                controller.processingOrders.value,
+              ),
+              _statusTab(
+                controller,
+                'Selesai',
+                controller.completedOrders.value,
+              ),
             ],
           ),
         ),
-        
+
         // Search Bar
         Padding(
           padding: const EdgeInsets.all(16),
@@ -223,8 +258,14 @@ class AdminDashboardScreen extends StatelessWidget {
             onChanged: (value) => controller.searchQuery.value = value,
             decoration: InputDecoration(
               hintText: 'Cari Pelanggan...',
-              hintStyle: GoogleFonts.poppins(fontSize: 14, color: AppColors.textHint),
-              prefixIcon: const Icon(Icons.search_rounded, color: AppColors.textHint),
+              hintStyle: GoogleFonts.poppins(
+                fontSize: 14,
+                color: AppColors.textHint,
+              ),
+              prefixIcon: const Icon(
+                Icons.search_rounded,
+                color: AppColors.textHint,
+              ),
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
@@ -233,20 +274,23 @@ class AdminDashboardScreen extends StatelessWidget {
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: AppColors.primary.withOpacity(0.15)),
+                borderSide: BorderSide(
+                  color: AppColors.primary.withOpacity(0.15),
+                ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+                borderSide: const BorderSide(
+                  color: AppColors.primary,
+                  width: 1.5,
+                ),
               ),
             ),
           ),
         ),
 
         // Orders List
-        Expanded(
-          child: _buildFilteredOrders(controller),
-        ),
+        Expanded(child: _buildFilteredOrders(controller)),
       ],
     );
   }
@@ -256,26 +300,30 @@ class AdminDashboardScreen extends StatelessWidget {
     if (controller.recentOrders.isEmpty) return _emptyState();
 
     return Column(
-      children: controller.recentOrders.map((order) => OrderCard(
-        order: order,
-        onTap: () {
-          final orderCtrl = Get.find<OrderController>();
-          orderCtrl.selectedOrder.value = order;
-          Get.toNamed(AppRoutes.adminOrderDetail, arguments: order);
-        },
-      )).toList(),
+      children: controller.recentOrders
+          .map(
+            (order) => OrderCard(
+              order: order,
+              onTap: () {
+                final orderCtrl = Get.find<OrderController>();
+                orderCtrl.selectedOrder.value = order;
+                Get.toNamed(AppRoutes.adminOrderDetail, arguments: order);
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
   Widget _buildFilteredOrders(DashboardController controller) {
     final filtered = controller.allOrders.where((o) {
       final matchesStatus = o.status == controller.selectedStatus.value;
-      final matchesSearch = o.customerName
-          .toLowerCase()
-          .contains(controller.searchQuery.value.toLowerCase());
+      final matchesSearch = o.customerName.toLowerCase().contains(
+        controller.searchQuery.value.toLowerCase(),
+      );
       return matchesStatus && matchesSearch;
     }).toList();
-    
+
     if (controller.isLoading.value) return const LoadingWidget(itemCount: 5);
     if (filtered.isEmpty) return _emptyState();
 
@@ -323,15 +371,15 @@ class AdminDashboardScreen extends StatelessWidget {
             color: isSelected ? statusColor : Colors.grey.shade200,
             width: 1,
           ),
-          boxShadow: isSelected 
-            ? [
-                BoxShadow(
-                  color: statusColor.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                )
-              ]
-            : null,
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: statusColor.withOpacity(0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : null,
         ),
         child: Row(
           children: [
@@ -347,7 +395,9 @@ class AdminDashboardScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: isSelected ? Colors.white.withOpacity(0.2) : Colors.grey.shade100,
+                color: isSelected
+                    ? Colors.white.withOpacity(0.2)
+                    : Colors.grey.shade100,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
@@ -365,7 +415,12 @@ class AdminDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _statTile(String label, String value, Color color, {bool isCurrency = false}) {
+  Widget _statTile(
+    String label,
+    String value,
+    Color color, {
+    bool isCurrency = false,
+  }) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -441,18 +496,41 @@ class AdminDashboardScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: Row(
           children: [
-            Expanded(child: _navItem(controller, 0, Icons.home_rounded, 'Beranda')),
-            Expanded(child: _navItem(controller, 1, Icons.receipt_long_rounded, 'Pesanan')),
+            Expanded(
+              child: _navItem(controller, 0, Icons.home_rounded, 'Beranda'),
+            ),
+            Expanded(
+              child: _navItem(
+                controller,
+                1,
+                Icons.receipt_long_rounded,
+                'Pesanan',
+              ),
+            ),
             const SizedBox(width: 56), // Proper space for FAB
-            Expanded(child: _navItem(controller, 2, Icons.bar_chart_rounded, 'Laporan')),
-            Expanded(child: _navItem(controller, 3, Icons.settings_rounded, 'Setelan')),
+            Expanded(
+              child: _navItem(
+                controller,
+                2,
+                Icons.bar_chart_rounded,
+                'Laporan',
+              ),
+            ),
+            Expanded(
+              child: _navItem(controller, 3, Icons.settings_rounded, 'Setelan'),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _navItem(DashboardController controller, int index, IconData icon, String label) {
+  Widget _navItem(
+    DashboardController controller,
+    int index,
+    IconData icon,
+    String label,
+  ) {
     bool isSelected = controller.currentIndex.value == index;
     return InkWell(
       onTap: () => controller.changePage(index),
@@ -598,7 +676,10 @@ class AdminDashboardScreen extends StatelessWidget {
         children: [
           Icon(Icons.inbox_rounded, size: 48, color: Colors.grey.shade300),
           const SizedBox(height: 12),
-          Text('Belum ada data', style: GoogleFonts.poppins(color: Colors.grey)),
+          Text(
+            'Belum ada data',
+            style: GoogleFonts.poppins(color: Colors.grey),
+          ),
         ],
       ),
     );
@@ -708,12 +789,12 @@ class AdminDashboardScreen extends StatelessWidget {
                 ],
               ),
             ],
+          ),
         ),
       ),
-    ),
-    barrierDismissible: false,
-  );
-}
+      barrierDismissible: false,
+    );
+  }
 
   Widget _buildLaporanView(DashboardController controller) {
     return Column(
@@ -722,10 +803,11 @@ class AdminDashboardScreen extends StatelessWidget {
         Expanded(
           child: Obx(() {
             final orders = controller.filteredReportOrders;
-            
-            if (controller.isLoading.value) return const LoadingWidget(itemCount: 5);
+
+            if (controller.isLoading.value)
+              return const LoadingWidget(itemCount: 5);
             if (orders.isEmpty) return _emptyState();
-            
+
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20),
               child: Column(
@@ -756,11 +838,18 @@ class AdminDashboardScreen extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(8),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(Icons.picture_as_pdf_rounded, color: Colors.white, size: 18),
+                                const Icon(
+                                  Icons.picture_as_pdf_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
                                 const SizedBox(width: 8),
                                 Text(
                                   'Cetak PDF',
@@ -778,14 +867,21 @@ class AdminDashboardScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  ...orders.map((order) => OrderCard(
-                    order: order,
-                    onTap: () {
-                      final orderCtrl = Get.find<OrderController>();
-                      orderCtrl.selectedOrder.value = order;
-                      Get.toNamed(AppRoutes.adminOrderDetail, arguments: order);
-                    },
-                  )).toList(),
+                  ...orders
+                      .map(
+                        (order) => OrderCard(
+                          order: order,
+                          onTap: () {
+                            final orderCtrl = Get.find<OrderController>();
+                            orderCtrl.selectedOrder.value = order;
+                            Get.toNamed(
+                              AppRoutes.adminOrderDetail,
+                              arguments: order,
+                            );
+                          },
+                        ),
+                      )
+                      .toList(),
                   const SizedBox(height: 40),
                 ],
               ),
@@ -798,8 +894,18 @@ class AdminDashboardScreen extends StatelessWidget {
 
   Widget _buildMonthFilter(DashboardController controller) {
     final months = [
-      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+      'Januari',
+      'Februari',
+      'Maret',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Agustus',
+      'September',
+      'Oktober',
+      'November',
+      'Desember',
     ];
 
     return Container(
@@ -829,19 +935,29 @@ class AdminDashboardScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: const Color(0xFFE2E8F0)),
                   ),
-                  child: Obx(() => DropdownButtonHideUnderline(
-                    child: DropdownButton<int>(
-                      value: controller.selectedReportMonth.value,
-                      isExpanded: true,
-                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                      style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textPrimary, fontWeight: FontWeight.w600),
-                      items: List.generate(12, (index) => DropdownMenuItem(
-                        value: index + 1,
-                        child: Text(months[index]),
-                      )),
-                      onChanged: (val) => controller.selectedReportMonth.value = val!,
+                  child: Obx(
+                    () => DropdownButtonHideUnderline(
+                      child: DropdownButton<int>(
+                        value: controller.selectedReportMonth.value,
+                        isExpanded: true,
+                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        items: List.generate(
+                          12,
+                          (index) => DropdownMenuItem(
+                            value: index + 1,
+                            child: Text(months[index]),
+                          ),
+                        ),
+                        onChanged: (val) =>
+                            controller.selectedReportMonth.value = val!,
+                      ),
                     ),
-                  )),
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -854,19 +970,30 @@ class AdminDashboardScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: const Color(0xFFE2E8F0)),
                   ),
-                  child: Obx(() => DropdownButtonHideUnderline(
-                    child: DropdownButton<int>(
-                      value: controller.selectedReportYear.value,
-                      isExpanded: true,
-                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                      style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textPrimary, fontWeight: FontWeight.w600),
-                      items: [DateTime.now().year, DateTime.now().year - 1].map((year) => DropdownMenuItem(
-                        value: year,
-                        child: Text(year.toString()),
-                      )).toList(),
-                      onChanged: (val) => controller.selectedReportYear.value = val!,
+                  child: Obx(
+                    () => DropdownButtonHideUnderline(
+                      child: DropdownButton<int>(
+                        value: controller.selectedReportYear.value,
+                        isExpanded: true,
+                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        items: [DateTime.now().year, DateTime.now().year - 1]
+                            .map(
+                              (year) => DropdownMenuItem(
+                                value: year,
+                                child: Text(year.toString()),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (val) =>
+                            controller.selectedReportYear.value = val!,
+                      ),
                     ),
-                  )),
+                  ),
                 ),
               ),
             ],
@@ -902,7 +1029,11 @@ class AdminDashboardScreen extends StatelessWidget {
               color: Colors.white.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.account_balance_wallet_rounded, color: Colors.white, size: 24),
+            child: const Icon(
+              Icons.account_balance_wallet_rounded,
+              color: Colors.white,
+              size: 24,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -912,11 +1043,19 @@ class AdminDashboardScreen extends StatelessWidget {
               children: [
                 Text(
                   'Total Pendapatan',
-                  style: GoogleFonts.poppins(fontSize: 12, color: Colors.white.withOpacity(0.8), fontWeight: FontWeight.w500),
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    color: Colors.white.withOpacity(0.8),
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 Text(
                   Helpers.formatRupiah(controller.monthlyRevenue),
-                  style: GoogleFonts.poppins(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w800),
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ],
             ),
@@ -933,11 +1072,19 @@ class AdminDashboardScreen extends StatelessWidget {
             children: [
               Text(
                 'Total Pesanan',
-                style: GoogleFonts.poppins(fontSize: 12, color: Colors.white.withOpacity(0.8), fontWeight: FontWeight.w500),
+                style: GoogleFonts.poppins(
+                  fontSize: 12,
+                  color: Colors.white.withOpacity(0.8),
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               Text(
                 '${controller.monthlyOrderCount}',
-                style: GoogleFonts.poppins(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w800),
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ],
           ),
@@ -948,7 +1095,10 @@ class AdminDashboardScreen extends StatelessWidget {
 
   Widget _buildPlaceholderView(String title) {
     return Center(
-      child: Text('$title Screen (Segera Hadir)', style: GoogleFonts.poppins(color: Colors.grey)),
+      child: Text(
+        '$title Screen (Segera Hadir)',
+        style: GoogleFonts.poppins(color: Colors.grey),
+      ),
     );
   }
 
@@ -956,23 +1106,113 @@ class AdminDashboardScreen extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 24),
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.03),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Menu Admin',
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Baris 1: Kelola Item & Kelola Pelanggan
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildAdminShortcut(
+                    title: 'Kelola Item',
+                    icon: Icons.list_alt_rounded,
+                    color: AppColors.secondary,
+                    onTap: () => Get.toNamed(AppRoutes.adminAddItem),
+                  ),
+                  _buildAdminShortcut(
+                    title: 'Kelola Pelanggan',
+                    icon: Icons.people_outline_rounded,
+                    color: const Color(0xFFF59E0B),
+                    onTap: () {
+                      // TODO: Navigasi ke halaman kelola pelanggan
+                      Get.snackbar(
+                        'Info',
+                        'Fitur Kelola Pelanggan akan segera hadir!',
+                        backgroundColor: Colors.grey.withOpacity(0.2),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              // Baris 2: Kelola Karyawan & Atur Notifikasi
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildAdminShortcut(
+                    title: 'Kelola Karyawan',
+                    icon: Icons.badge_outlined,
+                    color: const Color(0xFF10B981),
+                    onTap: () {
+                      // TODO: Navigasi ke halaman kelola karyawan
+                      Get.snackbar(
+                        'Info',
+                        'Fitur Kelola Karyawan akan segera hadir!',
+                        backgroundColor: Colors.grey.withOpacity(0.2),
+                      );
+                    },
+                  ),
+                  _buildAdminShortcut(
+                    title: 'Atur Notifikasi',
+                    icon: Icons.notifications_none_rounded,
+                    color: const Color(0xFF6366F1),
+                    onTap: () {
+                      // TODO: Navigasi ke halaman notifikasi
+                      Get.snackbar(
+                        'Info',
+                        'Fitur Notifikasi akan segera hadir!',
+                        backgroundColor: Colors.grey.withOpacity(0.2),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
         _settingDropdown(
           title: 'Kebijakan Privasi',
           icon: Icons.privacy_tip_outlined,
           color: const Color(0xFF6366F1),
-          content: 'Kami berkomitmen untuk melindungi privasi Anda. Semua data pribadi yang kami kumpulkan hanya digunakan untuk keperluan layanan Laundry.kuy dan tidak akan dibagikan kepada pihak ketiga tanpa izin Anda.',
+          content:
+              'Kami berkomitmen untuk melindungi privasi Anda. Semua data pribadi yang kami kumpulkan hanya digunakan untuk keperluan layanan Laundry.kuy dan tidak akan dibagikan kepada pihak ketiga tanpa izin Anda.',
         ),
         _settingDropdown(
           title: 'Kebijakan Layanan',
           icon: Icons.description_outlined,
           color: const Color(0xFF0EA5E9),
-          content: 'Dengan menggunakan layanan kami, Anda menyetujui syarat dan ketentuan yang berlaku. Kami bertanggung jawab atas kualitas pencucian sesuai standar, namun tidak bertanggung jawab atas kerusakan luntur pada pakaian yang memang rentan.',
+          content:
+              'Dengan menggunakan layanan kami, Anda menyetujui syarat dan ketentuan yang berlaku. Kami bertanggung jawab atas kualitas pencucian sesuai standar, namun tidak bertanggung jawab atas kerusakan luntur pada pakaian yang memang rentan.',
         ),
         _settingDropdown(
           title: 'Pusat Bantuan (FAQ)',
           icon: Icons.help_outline_rounded,
           color: const Color(0xFFF59E0B),
-          content: '• Berapa lama estimasi cuci? Biasanya 1-3 hari tergantung paket.\n• Bagaimana jika pakaian hilang? Kami akan memberikan ganti rugi sesuai ketentuan.\n• Apakah ada layanan antar jemput? Tidak, Anda harus mengambil cucian sendiri.',
+          content:
+              '• Berapa lama estimasi cuci? Biasanya 1-3 hari tergantung paket.\n• Bagaimana jika pakaian hilang? Kami akan memberikan ganti rugi sesuai ketentuan.\n• Apakah ada layanan antar jemput? Tidak, Anda harus mengambil cucian sendiri.',
         ),
         _settingDropdown(
           title: 'Tentang Aplikasi',
@@ -988,21 +1228,36 @@ class AdminDashboardScreen extends StatelessWidget {
                   color: const Color(0xFF10B981).withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.dry_cleaning_rounded, color: Color(0xFF10B981), size: 32),
+                child: const Icon(
+                  Icons.dry_cleaning_rounded,
+                  color: Color(0xFF10B981),
+                  size: 32,
+                ),
               ),
               const SizedBox(height: 12),
               Text(
                 'Laundry.kuy',
-                style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
               ),
               Text(
                 'Versi 1.0.0 (Stable)',
-                style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textSecondary),
+                style: GoogleFonts.poppins(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                ),
               ),
               const SizedBox(height: 12),
               Text(
                 'Solusi digital terintegrasi untuk manajemen bisnis laundry yang lebih modern, efisien, dan transparan.',
-                style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textSecondary, height: 1.6),
+                style: GoogleFonts.poppins(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                  height: 1.6,
+                ),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -1058,16 +1313,58 @@ class AdminDashboardScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(60, 0, 20, 20),
-              child: contentWidget ?? Text(
-                content ?? '',
-                style: GoogleFonts.poppins(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                  height: 1.5,
-                ),
-              ),
+              child:
+                  contentWidget ??
+                  Text(
+                    content ?? '',
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                      height: 1.5,
+                    ),
+                  ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAdminShortcut({
+    required String title,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        child: Material(
+          color: color.withOpacity(0.08),
+          borderRadius: BorderRadius.circular(12),
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(12),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(icon, color: color, size: 28),
+                  const SizedBox(height: 8),
+                  Text(
+                    title,
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
